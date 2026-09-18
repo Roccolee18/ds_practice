@@ -1,0 +1,18 @@
+# Generated, not committed -- rebuilt by sets/<name>/bootstrap.sh in a few seconds.
+# Keeping these out is what stops the repo growing by 29MB per problem set.
+data/
+answer_key.b64
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+# Jupyter
+.ipynb_checkpoints/
+*-checkpoint.ipynb
+
+# OS
+.DS_Store
+Thumbs.db

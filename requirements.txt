@@ -1,0 +1,18 @@
+# Minimums that the problem sets are known to work against.
+pandas>=2.1
+numpy>=1.26
+scikit-learn>=1.3
+jupyterlab>=4.0
+
+# Optional but recommended: strips outputs from template notebooks on commit.
+#   pip install nbstripout && nbstripout --install --attributes .gitattributes
+nbstripout>=0.7
+
+# Verified against: pandas 3.0.2, numpy 2.4.4, scikit-learn 1.8.0, Python 3.11.
+#
+# numpy does not guarantee that Generator distribution methods produce identical
+# streams across versions, so a major numpy upgrade can change the generated data
+# even for the same seed. That is harmless -- bootstrap.sh always rebuilds the data
+# and the answer key together, so they cannot disagree. It only means a very old
+# attempt's numbers may not reproduce exactly; the attempt's saved notebook outputs
+# are the durable record.
