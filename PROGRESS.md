@@ -8,7 +8,7 @@ Budget 80 min. Calibration: **≥85%** good shape · **65–85%** competitive ·
 
 | # | date | seed | elapsed | pandas | SQL | ML | overall | M4 /12 | the one thing that cost me most |
 |---|------|------|---------|--------|-----|----|---------|--------|----------------------------------|
-| 1 | | | | | | | | | |
+| 1 | 2026-09-17 | 20260917 | 52 min | 25% | 0% | 0% | 0% | 2 | not knowing basic pandas syntax |
 
 <!-- template row:
 | 2 | 2026-09-24 | 20260917 | 80 min | 100% | 60% | 83% | 81% | 9 | gaps-and-islands — burned 11 min reinventing it |
