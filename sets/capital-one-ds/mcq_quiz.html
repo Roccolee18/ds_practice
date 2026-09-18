@@ -1,0 +1,343 @@
+<title>Data Science Screen Drills</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+:root{
+  --ground:#F5F7FA; --surface:#FFFFFF; --surface-2:#EEF1F6;
+  --ink:#17202D; --muted:#5B6B80; --faint:#8A99AC;
+  --line:#DCE2EB; --line-strong:#C3CCD9;
+  --accent:#2C4C8C; --accent-soft:#E7EDF8; --on-accent:#FFFFFF;
+  --good:#1B6F45; --good-soft:#E3F2E9; --good-line:#8CC2A6;
+  --bad:#A62F1C; --bad-soft:#FBE8E4; --bad-line:#DDA093;
+  --warn:#8A5D0F;
+  --shadow:0 1px 2px rgba(23,32,45,.06), 0 8px 24px -12px rgba(23,32,45,.18);
+  --radius:10px;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --ground:#0E141C; --surface:#161E29; --surface-2:#1D2733;
+    --ink:#E6EBF3; --muted:#9BABBF; --faint:#6D7D92;
+    --line:#26313F; --line-strong:#354354;
+    --accent:#7FA0DC; --accent-soft:#1B2739; --on-accent:#0E141C;
+    --good:#5BC28D; --good-soft:#132A20; --good-line:#2F6A4C;
+    --bad:#E88670; --bad-soft:#2C1713; --bad-line:#7A3629;
+    --warn:#D9A544;
+    --shadow:0 1px 2px rgba(0,0,0,.4), 0 8px 24px -12px rgba(0,0,0,.6);
+  }
+}
+:root[data-theme="dark"]{
+  --ground:#0E141C; --surface:#161E29; --surface-2:#1D2733;
+  --ink:#E6EBF3; --muted:#9BABBF; --faint:#6D7D92;
+  --line:#26313F; --line-strong:#354354;
+  --accent:#7FA0DC; --accent-soft:#1B2739; --on-accent:#0E141C;
+  --good:#5BC28D; --good-soft:#132A20; --good-line:#2F6A4C;
+  --bad:#E88670; --bad-soft:#2C1713; --bad-line:#7A3629;
+  --warn:#D9A544;
+  --shadow:0 1px 2px rgba(0,0,0,.4), 0 8px 24px -12px rgba(0,0,0,.6);
+}
+
+*{box-sizing:border-box}
+body{
+  margin:0; background:var(--ground); color:var(--ink);
+  font-family:"Source Serif 4",Georgia,serif; font-size:16px; line-height:1.6;
+  -webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:760px; margin:0 auto; padding-inline:16px; padding-block:0 56px}
+
+/* ---------- header ---------- */
+.bar{
+  position:sticky; top:env(safe-area-inset-top,0px); z-index:20;
+  background:color-mix(in srgb, var(--ground) 92%, transparent);
+  backdrop-filter:blur(8px);
+  border-bottom:1px solid var(--line);
+}
+.bar-in{max-width:760px; margin:0 auto; padding:10px 16px}
+.bar-top{display:flex; align-items:baseline; gap:12px; flex-wrap:wrap}
+h1{
+  font-family:Archivo,system-ui,sans-serif; font-weight:700; font-size:16px;
+  letter-spacing:-.01em; margin:0; text-wrap:balance;
+}
+.counts{
+  margin-left:auto; font-family:"JetBrains Mono",ui-monospace,monospace;
+  font-size:12px; color:var(--muted); font-variant-numeric:tabular-nums;
+  display:flex; gap:12px;
+}
+.counts b{color:var(--ink); font-weight:600}
+.track{height:3px; background:var(--line); border-radius:99px; margin-top:9px; overflow:hidden}
+.fill{height:100%; background:var(--accent); width:0%; transition:width .28s ease}
+
+/* ---------- modes ---------- */
+.modes{display:flex; gap:6px; flex-wrap:wrap; margin:16px 0 4px}
+.chip{
+  font-family:Archivo,system-ui,sans-serif; font-size:12px; font-weight:600;
+  letter-spacing:.02em; padding:5px 11px; border-radius:99px;
+  border:1px solid var(--line-strong); background:var(--surface); color:var(--muted);
+  cursor:pointer; transition:.15s;
+}
+.chip:hover{border-color:var(--accent); color:var(--ink)}
+.chip[aria-pressed="true"]{background:var(--accent); border-color:var(--accent); color:var(--on-accent)}
+.chip:disabled{opacity:.4; cursor:not-allowed}
+
+/* ---------- card ---------- */
+.card{
+  background:var(--surface); border:1px solid var(--line);
+  border-radius:var(--radius); box-shadow:var(--shadow);
+  padding:22px; margin-top:14px;
+}
+.eyebrow{
+  display:flex; align-items:center; gap:9px; flex-wrap:wrap;
+  font-family:"JetBrains Mono",ui-monospace,monospace; font-size:11px;
+  color:var(--faint); letter-spacing:.04em; margin-bottom:14px;
+}
+.eyebrow .qid{color:var(--accent); font-weight:600}
+.eyebrow .sep{color:var(--line-strong)}
+.diff{
+  font-family:Archivo,system-ui,sans-serif; font-size:10px; font-weight:700;
+  text-transform:uppercase; letter-spacing:.08em; padding:2px 7px; border-radius:4px;
+  background:var(--surface-2); color:var(--muted);
+}
+.diff.hard{color:var(--warn); background:color-mix(in srgb, var(--warn) 12%, transparent)}
+.qtext{font-size:17px; line-height:1.55}
+.qtext p{margin:0 0 10px} .qtext p:last-child{margin-bottom:0}
+.qtext code{font-family:"JetBrains Mono",monospace; font-size:.88em; background:var(--surface-2); padding:1px 5px; border-radius:4px}
+
+.opts{display:flex; flex-direction:column; gap:8px; margin-top:18px}
+.opt{
+  display:flex; gap:11px; align-items:flex-start; text-align:left; width:100%;
+  font-family:"Source Serif 4",Georgia,serif; font-size:15px; line-height:1.5; color:var(--ink);
+  background:var(--surface); border:1px solid var(--line-strong); border-radius:8px;
+  padding:12px 14px; cursor:pointer; transition:.13s;
+}
+.opt:hover:not(:disabled){border-color:var(--accent); background:var(--accent-soft)}
+.opt:disabled{cursor:default}
+.opt .key{
+  flex:none; font-family:"JetBrains Mono",monospace; font-size:11px; font-weight:600;
+  width:20px; height:20px; border-radius:5px; display:grid; place-items:center;
+  background:var(--surface-2); color:var(--muted); margin-top:2px;
+}
+.opt p{margin:0}
+.opt.correct{background:var(--good-soft); border-color:var(--good-line)}
+.opt.correct .key{background:var(--good); color:var(--surface)}
+.opt.wrong{background:var(--bad-soft); border-color:var(--bad-line)}
+.opt.wrong .key{background:var(--bad); color:var(--surface)}
+.opt.dim{opacity:.55}
+
+/* ---------- explanation ---------- */
+.why{margin-top:16px; border-top:1px solid var(--line); padding-top:16px}
+.verdict{
+  font-family:Archivo,system-ui,sans-serif; font-size:12px; font-weight:700;
+  text-transform:uppercase; letter-spacing:.07em; margin-bottom:9px;
+}
+.verdict.ok{color:var(--good)} .verdict.no{color:var(--bad)}
+.why-body{font-size:15px; color:var(--muted)}
+.why-body p{margin:0 0 11px} .why-body p:last-child{margin-bottom:0}
+.why-body strong{color:var(--ink); font-weight:600}
+.why-body code{font-family:"JetBrains Mono",monospace; font-size:.87em; background:var(--surface-2); padding:1px 5px; border-radius:4px; color:var(--ink)}
+
+.actions{display:flex; gap:9px; margin-top:18px; align-items:center; flex-wrap:wrap}
+.btn{
+  font-family:Archivo,system-ui,sans-serif; font-size:13px; font-weight:600;
+  padding:9px 18px; border-radius:7px; border:1px solid var(--accent);
+  background:var(--accent); color:var(--on-accent); cursor:pointer; transition:.15s;
+}
+.btn:hover{filter:brightness(1.08)}
+.btn:focus-visible,.opt:focus-visible,.chip:focus-visible{outline:2px solid var(--accent); outline-offset:2px}
+.btn.ghost{background:transparent; color:var(--muted); border-color:var(--line-strong)}
+.btn.ghost:hover{color:var(--ink); border-color:var(--accent)}
+.hint{font-family:"JetBrains Mono",monospace; font-size:11px; color:var(--faint); margin-left:auto}
+
+/* ---------- results ---------- */
+.res-head{font-family:Archivo,system-ui,sans-serif; font-size:22px; font-weight:700; margin:0 0 4px; letter-spacing:-.01em}
+.res-sub{color:var(--muted); font-size:15px; margin:0 0 20px}
+.big{font-family:"JetBrains Mono",monospace; font-size:44px; font-weight:600; font-variant-numeric:tabular-nums; line-height:1; color:var(--accent)}
+.rows{display:flex; flex-direction:column; gap:1px; background:var(--line); border:1px solid var(--line); border-radius:8px; overflow:hidden; margin-top:18px}
+.row{display:flex; align-items:center; gap:12px; background:var(--surface); padding:11px 14px; font-size:14px}
+.row .nm{font-family:Archivo,system-ui,sans-serif; font-weight:600; font-size:13px}
+.row .bar2{flex:1; height:5px; background:var(--surface-2); border-radius:99px; overflow:hidden; min-width:50px}
+.row .bar2 i{display:block; height:100%; background:var(--accent)}
+.row .pc{font-family:"JetBrains Mono",monospace; font-size:12px; font-variant-numeric:tabular-nums; color:var(--muted); min-width:58px; text-align:right}
+.missed{margin-top:18px; font-size:14px; color:var(--muted)}
+.missed code{font-family:"JetBrains Mono",monospace; font-size:12px; background:var(--surface-2); padding:2px 6px; border-radius:4px; margin-right:4px; display:inline-block; color:var(--ink)}
+.note{font-size:13px; color:var(--faint); margin-top:22px; padding-top:14px; border-top:1px solid var(--line)}
+
+@media (max-width:480px){
+  .card{padding:16px}
+  .qtext{font-size:16px}
+  .hint{display:none}
+  .counts{width:100%; margin-left:0}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+
+<div class="bar">
+  <div class="bar-in">
+    <div class="bar-top">
+      <h1>Data Science Screen Drills</h1>
+      <div class="counts">
+        <span>Q <b id="c-pos">1</b>/<b id="c-tot">40</b></span>
+        <span>correct <b id="c-ok">0</b></span>
+        <span>acc <b id="c-acc">—</b></span>
+      </div>
+    </div>
+    <div class="track"><div class="fill" id="fill"></div></div>
+  </div>
+</div>
+
+<div class="wrap">
+  <div class="modes" id="modes"></div>
+  <div id="stage"></div>
+  <p class="note">
+    40 scenario questions, weighted like CodeSignal's published Data Science Framework —
+    roughly 6 ML-fundamentals items for every 2 probability and statistics items.
+    Keys <b>1</b>–<b>4</b> answer, <b>Enter</b> advances. Missed questions are remembered on this
+    device, so “Missed” picks up where you left off.
+  </p>
+</div>
+
+<script>
+const Q = [{"id": "Q01", "topic": "Probability", "sub": "Bayes' theorem", "diff": "medium", "q": "<p>A fraud model flags 1% of all transactions for review. 0.2% of transactions are genuinely fraudulent, and the model catches 90% of those.</p><p>A transaction has just been flagged. What is the probability it is actually fraudulent?</p>", "options": ["<p>90%</p>", "<p>18%</p>", "<p>2%</p>", "<p>About 50% — flagged and not-flagged are roughly equally likely</p>"], "answer": 1, "why": "<p>P(fraud) = 0.002 and P(flag | fraud) = 0.90, so true positives are 0.002 x 0.90 = 0.0018 of all transactions. The model flags 0.01 of all transactions. So P(fraud | flag) = 0.0018 / 0.01 = <strong>18%</strong>.</p><p>This is the base-rate fallacy, and it is the single most-tested probability idea in DS screens. A model with 90% sensitivity still produces mostly false positives when the condition is rare, because the enormous negative class contributes far more false positives than the tiny positive class contributes true ones. It is also why fraud and default teams care about precision at a given alert volume, not sensitivity alone.</p>"}, {"id": "Q02", "topic": "Probability", "sub": "Binomial distribution", "diff": "medium", "q": "<p>A portfolio contains 20 accounts. Each defaults independently with probability 0.05.</p><p>What is the probability that <strong>exactly 2</strong> of them default?</p>", "options": ["<p>5.0%</p>", "<p>18.9%</p>", "<p>25.0%</p>", "<p>9.5%</p>"], "answer": 1, "why": "<p>Binomial: C(20,2) x 0.05^2 x 0.95^18 = 190 x 0.0025 x 0.3972 = <strong>0.189</strong>.</p><p>Watch for the trap of answering 0.05 x 2 = 10% or similar. Also note the independence assumption — in a real credit portfolio defaults are correlated through the macro cycle, which is exactly why stress testing exists. Saying that out loud is worth marks in an interview.</p>"}, {"id": "Q03", "topic": "Statistics", "sub": "Selection bias", "diff": "hard", "q": "<p>You build a default-risk model using historical data on <strong>approved</strong> applicants only, since those are the only ones with a known repayment outcome. It performs well in backtesting.</p><p>What is the most serious problem with using it to score new applications?</p>", "options": ["<p>Nothing — approved applicants are the only ones with labels, so this is the correct training set</p>", "<p>The training population was already filtered by the existing approval policy, so the model never sees the riskiest part of the applicant distribution it will be asked to score</p>", "<p>The sample is too small to be representative</p>", "<p>Approved applicants will have more missing data than rejected ones</p>"], "answer": 1, "why": "<p>This is <strong>selection bias</strong>, and in lending it has its own name: the <strong>reject inference</strong> problem. Your training data is a censored sample — the incumbent policy already removed the applicants it judged riskiest, so the model learns the relationship between features and default only within the approved region. Applied to the full applicant pool it extrapolates into a region it has no evidence about.</p><p>Standard mitigations: reject inference techniques (parcelling, augmentation), or deliberately approving a small random holdout below policy cutoff to generate unbiased labels. Naming reject inference in a Capital One interview is a strong signal.</p>"}, {"id": "Q04", "topic": "Statistics", "sub": "Confidence intervals", "diff": "medium", "q": "<p>A 95% confidence interval for mean customer income is [$48,000, $52,000].</p><p>Which statement is correct?</p>", "options": ["<p>There is a 95% probability the true mean income lies between $48,000 and $52,000</p>", "<p>95% of customers have incomes between $48,000 and $52,000</p>", "<p>If we repeated this sampling procedure many times, about 95% of the intervals constructed this way would contain the true mean</p>", "<p>We are 95% confident the sample mean lies in this interval</p>"], "answer": 2, "why": "<p>The confidence level is a property of the <strong>procedure</strong>, not of this one interval. Under the frequentist framing the true mean is a fixed constant — it is either in this interval or it is not, so assigning it a 95% probability is a category error.</p><p>Option B confuses a confidence interval with a prediction interval (which describes individual values and would be far wider). Option D is trivially wrong: the sample mean is the centre of the interval by construction.</p>"}, {"id": "Q05", "topic": "Statistics", "sub": "p-values", "diff": "medium", "q": "<p>An A/B test on a new application flow returns p = 0.03.</p><p>What does this mean?</p>", "options": ["<p>There is a 3% probability the null hypothesis is true</p>", "<p>There is a 97% probability the new flow is better</p>", "<p>If the null hypothesis were true, there would be a 3% probability of observing a result at least as extreme as this one</p>", "<p>The new flow improves conversion by 3%</p>"], "answer": 2, "why": "<p>A p-value is <strong>P(data at least this extreme | null is true)</strong> — not P(null | data), which is what options A and B claim. Inverting that conditional is the most common statistical error in industry.</p><p>Also worth saying unprompted: statistical significance is not practical significance. With a large enough sample, a 0.01% lift is significant and worthless. Always ask for the effect size and its confidence interval alongside the p-value.</p>"}, {"id": "Q06", "topic": "Statistics", "sub": "Simpson's paradox", "diff": "hard", "q": "<p>Segment A has a higher approval rate than Segment B for <strong>every individual card product</strong>. But looking at the portfolio overall, Segment A&#x27;s approval rate is <strong>lower</strong> than Segment B&#x27;s.</p><p>What is the most likely explanation?</p>", "options": ["<p>There is an error in the aggregation</p>", "<p>Segment A applies disproportionately for products that have low approval rates overall</p>", "<p>The products have different sample sizes, which invalidates the comparison</p>", "<p>This is statistically impossible</p>"], "answer": 1, "why": "<p><strong>Simpson&#x27;s paradox.</strong> The aggregate is a weighted average, and the two segments have different weights across products. If Segment A concentrates in a hard-to-approve product, its overall rate can fall below Segment B&#x27;s despite winning within every product.</p><p>The practical lesson: always ask what the confounding variable is before trusting an aggregate comparison. In fair-lending analysis this matters enormously — an apparent disparity in overall approval rates can be driven entirely by product mix, and a real disparity can be masked by it.</p>"}, {"id": "Q07", "topic": "Statistics", "sub": "Central limit theorem", "diff": "easy", "q": "<p>Customer income in your portfolio is strongly right-skewed.</p><p>What does the Central Limit Theorem let you conclude?</p>", "options": ["<p>With enough data, the income distribution itself becomes approximately normal</p>", "<p>The sampling distribution of the sample mean becomes approximately normal as sample size grows, even though income itself stays skewed</p>", "<p>You should log-transform income before any analysis</p>", "<p>The median is a better estimator than the mean for skewed data</p>"], "answer": 1, "why": "<p>The CLT is about the <strong>sampling distribution of a statistic</strong>, not about the raw data. Income stays skewed no matter how much of it you collect; it is the distribution of *sample means* that approaches normality (given finite variance and adequate n).</p><p>That is what licenses the usual t-tests and confidence intervals on the mean even for non-normal data. Option D is reasonable advice in its own right, but it is not what the CLT says.</p>"}, {"id": "Q08", "topic": "Statistics", "sub": "Descriptive statistics", "diff": "easy", "q": "<p>You are reporting a typical customer&#x27;s annual income. The distribution is right-skewed with a few very high earners.</p><p>Which is the more appropriate summary, and why?</p>", "options": ["<p>The mean, because it uses all the data</p>", "<p>The median, because it is not pulled upward by the extreme high incomes</p>", "<p>The mode, because it is the most common value</p>", "<p>The mean, because the CLT makes it unbiased</p>"], "answer": 1, "why": "<p>The mean is dragged toward the tail by a small number of very high earners, so it overstates what a typical customer earns. The median is robust to that.</p><p>Report both when you can — the <strong>gap between mean and median is itself a measure of skew</strong>, and volunteering that reads as fluency. The mean is not wrong, it just answers a different question (&quot;what is the total divided by the count?&quot;, which is the right question for revenue forecasting).</p>"}, {"id": "Q09", "topic": "Probability", "sub": "Expected value", "diff": "medium", "q": "<p>Approving a non-defaulting applicant earns $300. Approving one who defaults costs $1,200. Declining earns $0.</p><p>Above what predicted default probability should you decline?</p>", "options": ["<p>0.20</p>", "<p>0.25</p>", "<p>0.50</p>", "<p>0.80</p>"], "answer": 0, "why": "<p>Approve while expected value is positive: (1-p)(300) - p(1200) &gt; 0, so 300 &gt; 1500p, giving p &lt; <strong>0.20</strong>.</p><p>The general formula is worth memorising: <strong>break-even p = gain / (gain + loss)</strong> = 300 / (300 + 1200) = 0.20. Note how far this is from the default 0.5 threshold — whenever the costs are asymmetric, 0.5 is arbitrary. And the probabilities have to be <strong>calibrated</strong> for this to mean anything, which is why <code>class_weight=&quot;balanced&quot;</code> quietly breaks it.</p>"}, {"id": "Q10", "topic": "Statistics", "sub": "Multiple comparisons", "diff": "medium", "q": "<p>You test 20 candidate features for association with default, each at the α = 0.05 level. Two come back significant.</p><p>What should you conclude?</p>", "options": ["<p>Both features are genuinely associated with default</p>", "<p>Testing 20 independent nulls at α = 0.05 is expected to produce about one false positive by chance, so these findings need correction or validation</p>", "<p>You should lower α to 0.01 and rerun the same tests on the same data</p>", "<p>The sample size is too small</p>"], "answer": 1, "why": "<p>With 20 independent tests at α = 0.05, the expected number of false positives under the null is 20 x 0.05 = 1, and the probability of at least one is 1 - 0.95^20 ≈ 64%. Finding two significant results is barely more than chance.</p><p>Fixes: Bonferroni (conservative), Benjamini-Hochberg FDR (usually more appropriate for screening), or — best — validate on held-out data. Option C is wrong because rerunning on the same data does not create new evidence.</p>"}, {"id": "Q11", "topic": "Statistics", "sub": "Correlation and confounding", "diff": "easy", "q": "<p>Customers who enrol in autopay default at half the rate of those who don&#x27;t. A colleague proposes enrolling everyone in autopay to halve losses.</p><p>What is the flaw?</p>", "options": ["<p>Autopay has no causal effect on anything</p>", "<p>Enrolment is self-selected: customers who opt in are likely more financially organised and lower-risk to begin with, so the correlation confounds the treatment with the type of person who chooses it</p>", "<p>The sample of autopay users is too small</p>", "<p>Default rates cannot be compared across groups</p>"], "answer": 1, "why": "<p>Classic confounding by self-selection. The observed gap mixes any genuine effect of autopay with the pre-existing difference between people who choose it and people who don&#x27;t.</p><p>To isolate the causal effect you would need a randomised trial (randomly offer an incentive to enrol) or a quasi-experimental design. Note the answer is not &quot;autopay does nothing&quot; — it may well help; the point is that this evidence cannot tell you how much.</p>"}, {"id": "Q12", "topic": "Statistics", "sub": "Hypothesis testing errors", "diff": "medium", "q": "<p>Your fraud model&#x27;s alert threshold is <strong>lowered</strong>, so more transactions get flagged.</p><p>What happens to precision and recall?</p>", "options": ["<p>Both increase</p>", "<p>Recall increases, precision typically decreases</p>", "<p>Precision increases, recall decreases</p>", "<p>Both decrease</p>"], "answer": 1, "why": "<p>Lowering the threshold flags more transactions, so you catch more of the true fraud (<strong>recall up</strong>) while also sweeping in more legitimate transactions (<strong>precision down</strong>).</p><p>This trade-off is the entire content of a precision-recall curve. In practice the threshold is set by operational capacity — how many alerts the review team can actually work per day — not by a statistical criterion.</p>"}, {"id": "Q13", "topic": "Statistics", "sub": "Sampling", "diff": "easy", "q": "<p>You need a 5,000-customer sample for a survey, and you need reliable estimates for the Student segment, which is only 3% of the portfolio.</p><p>Which sampling approach is most appropriate?</p>", "options": ["<p>Simple random sampling across the whole portfolio</p>", "<p>Stratified sampling, oversampling the Student segment, with weights applied when computing portfolio-level estimates</p>", "<p>Convenience sampling from customers who respond to email</p>", "<p>Cluster sampling by state</p>"], "answer": 1, "why": "<p>Simple random sampling would give roughly 150 Students — too few for a precise segment-level estimate. <strong>Stratified sampling</strong> lets you oversample the small stratum for precision where you need it, then reweight so portfolio-level numbers remain unbiased.</p><p>The reweighting step is the part people forget: without it, your portfolio estimates are skewed toward the oversampled group.</p>"}, {"id": "Q14", "topic": "Statistics", "sub": "A/B testing", "diff": "medium", "q": "<p>An A/B test on a marketing offer has been running for three days. The treatment is ahead and just crossed p &lt; 0.05. Your colleague wants to stop the test and ship.</p><p>What is the main concern?</p>", "options": ["<p>Three days is always too short regardless of sample size</p>", "<p>Repeatedly checking significance and stopping as soon as it is crossed inflates the false-positive rate well above 5%</p>", "<p>p &lt; 0.05 is not a strong enough threshold for a business decision</p>", "<p>The treatment group is probably contaminated</p>"], "answer": 1, "why": "<p>This is <strong>peeking</strong>, or optional stopping. If you monitor continuously and stop at the first significant result, the actual Type I error rate is far above the nominal 5% — random walks cross any fixed boundary eventually.</p><p>Fixes: fix the sample size in advance from a power calculation, or use a method designed for continuous monitoring (sequential testing, always-valid p-values, Bayesian stopping rules). Also relevant here: three days may not cover a full weekly cycle, and novelty effects distort early results.</p>"}, {"id": "Q15", "topic": "ML", "sub": "Bias-variance", "diff": "easy", "q": "<p>Your model achieves 0.98 AUC on training data and 0.71 AUC on held-out validation data.</p><p>What is the diagnosis, and the appropriate response?</p>", "options": ["<p>High bias (underfitting) — increase model complexity</p>", "<p>High variance (overfitting) — add regularization, reduce complexity, or get more training data</p>", "<p>The validation set is corrupted — re-split the data</p>", "<p>The model is well-calibrated and ready to ship</p>"], "answer": 1, "why": "<p>A large train-validation gap is the signature of <strong>high variance</strong>. The model has memorised noise specific to the training set.</p><p>Remedies, roughly in order of what to try first: stronger regularization, fewer/simpler features, less model capacity (shallower trees, fewer estimators), early stopping, and more training data. Contrast with high bias, where train and validation scores are both poor <strong>and close together</strong> — there, more data will not help at all.</p>"}, {"id": "Q16", "topic": "ML", "sub": "Regularization", "diff": "medium", "q": "<p>You have 400 candidate features and want a model that automatically discards the useless ones.</p><p>Which regularization should you reach for, and why?</p>", "options": ["<p>L2 (Ridge), because it shrinks coefficients toward zero</p>", "<p>L1 (Lasso), because its penalty drives some coefficients to exactly zero, performing feature selection</p>", "<p>Either — they produce equivalent results</p>", "<p>Neither; regularization does not affect feature selection</p>"], "answer": 1, "why": "<p><strong>L1 produces exact zeros; L2 does not.</strong> The geometric intuition: L1&#x27;s constraint region is a diamond with corners on the axes, so the optimum frequently lands on a corner where some coefficients are exactly 0. L2&#x27;s region is a sphere with no corners — coefficients shrink toward zero but essentially never reach it.</p><p>Elastic Net combines both, and is the usual choice when features are correlated, because L1 alone picks one feature arbitrarily from a correlated group and zeroes the rest.</p>"}, {"id": "Q17", "topic": "ML", "sub": "Data leakage", "diff": "medium", "q": "<p>You are predicting whether a credit application will default within 12 months. Which of these features is <strong>leakage</strong>?</p>", "options": ["<p>The applicant&#x27;s FICO score at the time of application</p>", "<p>The number of credit inquiries in the 6 months before applying</p>", "<p>The total amount recovered by the collections department on the account</p>", "<p>The applicant&#x27;s stated annual income</p>"], "answer": 2, "why": "<p>Collections recoveries only exist <strong>after</strong> an account has already defaulted. It could not possibly be known at the moment the application is decided, so including it lets the model see the answer.</p><p>The general test, which is the one to state in an interview: <strong>&quot;could this value have been known on the decision date?&quot;</strong> If no, drop it. The tell-tale symptom is an implausibly high score — an AUC above ~0.95 on a credit problem where 0.75 is the industry norm is a leakage investigation, not a win.</p>"}, {"id": "Q18", "topic": "ML", "sub": "Class imbalance", "diff": "easy", "q": "<p>Your default prediction dataset is 3% positive. A model achieves 97% accuracy.</p><p>What should you conclude?</p>", "options": ["<p>The model is excellent and should be deployed</p>", "<p>97% accuracy is exactly what predicting &#x27;no default&#x27; for every single applicant would achieve, so accuracy tells you nothing here</p>", "<p>The model is overfitting</p>", "<p>The dataset needs to be rebalanced before any model can be trained</p>"], "answer": 1, "why": "<p>With a 3% positive rate, the trivial all-negative classifier scores 97%. <strong>Accuracy is uninformative on imbalanced problems</strong> and reporting it signals inexperience.</p><p>Use PR-AUC (whose baseline is the base rate, 0.03 here), ROC-AUC, recall at a fixed precision, or — best — a business metric in dollars. Option D overstates things: rebalancing is one tool among several, and it is often unnecessary at 3%, especially when calibrated probabilities matter downstream.</p>"}, {"id": "Q19", "topic": "ML", "sub": "Evaluation metrics", "diff": "medium", "q": "<p>Comparing two models on a dataset with a 2% positive rate: Model A has ROC-AUC 0.89, Model B has ROC-AUC 0.87. Their PR-AUCs are 0.21 and 0.34 respectively.</p><p>Which model is more useful, and why the discrepancy?</p>", "options": ["<p>Model A — ROC-AUC is the standard metric</p>", "<p>Model B — under heavy imbalance, ROC-AUC is inflated because the false-positive rate has an enormous denominator, while PR-AUC reflects performance on the rare class you actually care about</p>", "<p>They are equivalent; the metrics just disagree randomly</p>", "<p>Neither is usable until the classes are balanced</p>"], "answer": 1, "why": "<p>ROC-AUC&#x27;s x-axis is FPR = FP / (FP + TN). When negatives are 98% of the data, TN is huge, so even a large number of false positives barely moves FPR. ROC curves therefore look flattering under heavy imbalance.</p><p>Precision = TP / (TP + FP) has no such cushion — every false positive hurts directly. When the positive class is what you care about and it is rare, <strong>PR-AUC is the more honest metric</strong>, and Model B is the better model.</p>"}, {"id": "Q20", "topic": "ML", "sub": "Cross-validation", "diff": "medium", "q": "<p>You are building a model on transactions spanning 2022-2024, to be deployed scoring new transactions going forward.</p><p>Which validation scheme is correct?</p>", "options": ["<p>5-fold cross-validation with shuffling</p>", "<p>Stratified k-fold on the target</p>", "<p>Time-based split — train on earlier periods, validate on later ones (e.g. TimeSeriesSplit)</p>", "<p>Leave-one-out cross-validation</p>"], "answer": 2, "why": "<p>Random folds let the model train on future data and test on past data, which production will never allow. That interleaving produces an <strong>optimistic</strong> estimate — the model sees the recent regime during training when it never will in deployment.</p><p>Whenever the data has a time dimension and the model predicts forward, split by time. In credit specifically, holding out the most recent vintage entirely (&quot;out-of-time validation&quot;) is standard practice and a model-risk reviewer will ask for it by name.</p>"}, {"id": "Q21", "topic": "ML", "sub": "KNN", "diff": "easy", "q": "<p>In k-nearest-neighbours, you increase k from 1 to 50.</p><p>What happens to bias and variance?</p>", "options": ["<p>Bias decreases, variance increases</p>", "<p>Bias increases, variance decreases — the decision boundary smooths out and becomes less sensitive to individual noisy points</p>", "<p>Both increase</p>", "<p>Both decrease</p>"], "answer": 1, "why": "<p>k = 1 fits the training data perfectly (zero training error) with a jagged boundary that chases every noisy point — low bias, high variance. Larger k averages over more neighbours, smoothing the boundary: <strong>higher bias, lower variance</strong>.</p><p>This is the bias-variance trade-off made unusually visible, which is why it is a favourite exam question. k is chosen by cross-validation. Note also that KNN requires feature scaling, since it is distance-based.</p>"}, {"id": "Q22", "topic": "ML", "sub": "Ensembles", "diff": "medium", "q": "<p>What is the key difference between bagging (e.g. random forest) and boosting (e.g. gradient boosting)?</p>", "options": ["<p>Bagging uses decision trees; boosting uses linear models</p>", "<p>Bagging trains learners independently in parallel on bootstrap samples and averages them, primarily reducing variance; boosting trains them sequentially with each correcting its predecessor&#x27;s errors, primarily reducing bias</p>", "<p>Boosting is always more accurate than bagging</p>", "<p>Bagging requires feature scaling; boosting does not</p>"], "answer": 1, "why": "<p><strong>Bagging = parallel + averaging = variance reduction.</strong> Each tree is grown deep (low bias, high variance) on a bootstrap sample, and averaging cancels the independent errors.</p><p><strong>Boosting = sequential + error correction = bias reduction.</strong> Each weak learner (typically a shallow tree, high bias) focuses on what the ensemble got wrong so far.</p><p>Consequence: random forests are hard to overfit by adding trees, whereas boosting <strong>will</strong> overfit with too many rounds — hence early stopping and learning-rate tuning.</p>"}, {"id": "Q23", "topic": "ML", "sub": "Feature scaling", "diff": "easy", "q": "<p>Which of these models is <strong>not</strong> sensitive to the scale of input features?</p>", "options": ["<p>K-nearest neighbours</p>", "<p>Support vector machine with an RBF kernel</p>", "<p>Gradient-boosted decision trees</p>", "<p>Logistic regression with L2 regularization</p>"], "answer": 2, "why": "<p>Tree-based models split on thresholds within a single feature at a time (<code>income &gt; 50000</code>), so any monotonic rescaling produces identical splits. <strong>Trees need no scaling.</strong></p><p>Everything else listed does. KNN and RBF-SVM compute distances, so a feature measured in dollars would dominate one measured in years. Regularized linear models penalise coefficient magnitude, so the penalty would fall unevenly across differently-scaled features.</p>"}, {"id": "Q24", "topic": "ML", "sub": "Categorical encoding", "diff": "medium", "q": "<p>You have a <code>merchant_id</code> feature with 40,000 distinct values.</p><p>What is the main risk of using target encoding (replacing each merchant with the mean default rate of its transactions)?</p>", "options": ["<p>It produces too many columns</p>", "<p>Leakage and overfitting — a merchant appearing a handful of times gets an encoding computed partly from its own target values, which does not generalize</p>", "<p>Target encoding cannot handle categorical data</p>", "<p>It requires the target to be continuous</p>"], "answer": 1, "why": "<p>Target encoding uses the label, so unless it is computed <strong>inside</strong> the cross-validation fold (out-of-fold encoding) each row&#x27;s encoding is partly derived from its own target. Rare categories are worst: a merchant seen twice gets an encoding that is essentially just its own outcome.</p><p>Mitigations: out-of-fold encoding, smoothing toward the global mean by category frequency, and grouping rare categories into an &quot;other&quot; bucket. Option A is the problem with <strong>one-hot</strong> encoding on high cardinality, which is a real issue too — just not the one asked about.</p>"}, {"id": "Q25", "topic": "ML", "sub": "Multicollinearity", "diff": "medium", "q": "<p>Two features in your logistic regression are correlated at 0.95.</p><p>What is the primary consequence?</p>", "options": ["<p>The model&#x27;s predictions will be badly wrong</p>", "<p>Individual coefficient estimates become unstable and hard to interpret, though overall predictive performance may be fine</p>", "<p>The model will fail to converge</p>", "<p>The correlated features must always be removed</p>"], "answer": 1, "why": "<p>Multicollinearity inflates coefficient standard errors — the fit cannot tell which of the two correlated features deserves the credit, so their coefficients swing wildly (sometimes flipping sign) with small changes in the data. <strong>Predictions are typically fine; interpretation is not.</strong></p><p>That distinction decides whether you care. For a pure prediction task you may ignore it. For a credit model requiring adverse-action reason codes, unstable coefficients are unacceptable — which is one reason lenders use WOE binning and variable clustering. L2 regularization also stabilises the estimates.</p>"}, {"id": "Q26", "topic": "ML", "sub": "Logistic regression", "diff": "medium", "q": "<p>In a logistic regression predicting default, the coefficient on <code>num_inquiries_6m</code> is 0.35.</p><p>What does that mean?</p>", "options": ["<p>Each additional inquiry raises the probability of default by 35%</p>", "<p>Each additional inquiry raises the probability of default by 0.35</p>", "<p>Each additional inquiry raises the log-odds of default by 0.35, i.e. multiplies the odds by e^0.35 ≈ 1.42</p>", "<p>Inquiries explain 35% of the variance in default</p>"], "answer": 2, "why": "<p>Logistic regression is linear <strong>in the log-odds</strong>, not in probability. A coefficient β means a one-unit increase multiplies the odds by e^β — here about a 42% increase in odds.</p><p>The effect on *probability* is not constant: it depends on where you start. Going from 1% to 1.4% and from 40% to 48.6% are both consistent with the same coefficient. Confusing odds with probability is a standard trap.</p>"}, {"id": "Q27", "topic": "ML", "sub": "Calibration", "diff": "hard", "q": "<p>Your model has excellent ROC-AUC (0.88), but when you bucket predictions, applicants assigned a predicted probability of 0.10 actually default about 25% of the time.</p><p>What is the problem, and does it matter?</p>", "options": ["<p>Nothing is wrong — high AUC means the model is good</p>", "<p>The model ranks well but is poorly calibrated. It matters whenever the predicted probability is used as a number rather than a ranking — for example setting a cost-based cutoff or estimating expected loss</p>", "<p>The model is overfitting and must be retrained</p>", "<p>AUC was computed incorrectly</p>"], "answer": 1, "why": "<p><strong>AUC measures ranking only.</strong> Apply any monotonic transformation to every prediction and AUC is unchanged, while calibration is destroyed. A model can order applicants perfectly and still have probabilities that mean nothing.</p><p>It matters the moment you use the number: expected loss calculations, dollar-based thresholds, risk-based pricing, capital reserving. Fixes: Platt scaling or isotonic regression via <code>CalibratedClassifierCV</code>, and avoid <code>class_weight=&quot;balanced&quot;</code> when calibration matters, since it deliberately distorts the base rate.</p>"}, {"id": "Q28", "topic": "ML", "sub": "Learning curves", "diff": "medium", "q": "<p>You plot training and validation error against training set size. Both curves have plateaued, they sit close together, and both are at a high error level.</p><p>What should you do?</p>", "options": ["<p>Collect more training data</p>", "<p>Increase model capacity or add better features — this is high bias, and more data will not help</p>", "<p>Add stronger regularization</p>", "<p>Use a different train/test split</p>"], "answer": 1, "why": "<p>Converged curves with a small gap and high error mean <strong>high bias</strong>: the model is too simple to capture the signal, and it is already extracting everything it can from the data it has. More rows of the same thing will not move either curve.</p><p>Do the opposite of the overfitting playbook: richer features, more capacity, less regularization. The mirror case — a large persistent gap between the curves — is high variance, and *that* is when more data helps.</p>"}, {"id": "Q29", "topic": "ML", "sub": "Hyperparameter search", "diff": "medium", "q": "<p>You have a limited compute budget and 8 hyperparameters to tune.</p><p>Why is random search generally preferred over grid search here?</p>", "options": ["<p>Random search always finds a better optimum</p>", "<p>In practice only a few hyperparameters matter much, and random search explores more distinct values of each important one for the same number of trials, whereas grid search wastes evaluations on redundant combinations</p>", "<p>Grid search cannot handle more than 3 hyperparameters</p>", "<p>Random search is less likely to overfit the validation set</p>"], "answer": 1, "why": "<p>With a grid, every trial repeats the same few values along each axis — if only 2 of your 8 hyperparameters actually matter, a 3^8 grid tests just 3 distinct values of each of those. The same budget spent randomly tests a different value of every parameter on every trial.</p><p>Bayesian optimization (Optuna, scikit-optimize) does better still by using past trials to choose the next. Note that under real time pressure, sensible defaults plus a small random search beats an elaborate tuning setup almost every time.</p>"}, {"id": "Q30", "topic": "ML", "sub": "Train/validation/test", "diff": "easy", "q": "<p>Why keep a separate test set on top of a validation set?</p>", "options": ["<p>To have more data available for training</p>", "<p>Because the validation set is used repeatedly for model and hyperparameter selection, performance on it becomes optimistic; the test set gives an unbiased estimate because it is touched only once</p>", "<p>The test set is for checking data quality</p>", "<p>Test and validation sets are interchangeable terms</p>"], "answer": 1, "why": "<p>Every decision you make by looking at validation performance — model family, hyperparameters, feature set, threshold — fits you a little more to that particular sample. After a few dozen such decisions, validation score is no longer an unbiased estimate of generalization.</p><p>The test set is spent <strong>once</strong>, at the very end. If you look at it, tweak, and look again, it has become a validation set and you no longer have an honest estimate.</p>"}, {"id": "Q31", "topic": "ML", "sub": "Missing data", "diff": "medium", "q": "<p>A column <code>months_since_last_delinquency</code> is missing for 60% of applicants — specifically, for everyone who has never been delinquent.</p><p>What is the best treatment?</p>", "options": ["<p>Drop the column; 60% missing is too much</p>", "<p>Impute with the median</p>", "<p>The missingness is itself informative — add a binary &#x27;never delinquent&#x27; indicator and impute the numeric column with a sentinel or the median, so the model can use both signals</p>", "<p>Drop all rows with missing values</p>"], "answer": 2, "why": "<p>This is <strong>missing not at random</strong>, and the pattern carries the signal: missing means &quot;never delinquent&quot;, which is strongly predictive of low risk. Median imputation alone discards that by making these applicants look like average-risk ones.</p><p>Adding a missingness indicator preserves it. Option D would delete 60% of your data and, worse, systematically remove the lowest-risk applicants — destroying the sample. Some implementations (HistGradientBoosting, XGBoost, LightGBM) handle NaN natively and learn the split direction themselves.</p>"}, {"id": "Q32", "topic": "ML", "sub": "Resampling", "diff": "hard", "q": "<p>A colleague proposes SMOTE to fix an 8% positive class rate before fitting a model whose probabilities will be used to set a dollar-based approval cutoff.</p><p>What is the strongest objection?</p>", "options": ["<p>SMOTE only works for image data</p>", "<p>Resampling changes the base rate, so the model&#x27;s output probabilities no longer reflect the real-world prior — which breaks any cutoff derived from actual costs unless you recalibrate afterwards</p>", "<p>SMOTE always causes overfitting</p>", "<p>8% is too balanced for SMOTE to have any effect</p>"], "answer": 1, "why": "<p>Training on a rebalanced sample shifts the intercept, so predicted probabilities are inflated relative to reality. If your threshold comes from <code>gain / (gain + loss)</code>, it is now meaningless.</p><p>Secondary objections worth raising: SMOTE interpolates between neighbours, which is poorly defined for one-hot and mixed-type features, and it can synthesise points inside the majority region and amplify noise. At 8% positive, resampling is usually unnecessary — class weights or simply leaving it alone and choosing the right metric normally works better.</p>"}, {"id": "Q33", "topic": "ML", "sub": "Dimensionality", "diff": "medium", "q": "<p>What does PCA do, and what is the main caveat when using it before a supervised model?</p>", "options": ["<p>It selects the features most correlated with the target; the caveat is that it can overfit</p>", "<p>It finds orthogonal linear combinations of features that maximise retained variance; the caveat is that it ignores the target entirely, so a low-variance direction that happens to be highly predictive can be discarded</p>", "<p>It removes correlated features; the caveat is that it requires categorical inputs</p>", "<p>It clusters similar observations; the caveat is that k must be chosen in advance</p>"], "answer": 1, "why": "<p>PCA is <strong>unsupervised</strong> — it never looks at y. High variance and high predictive value are not the same thing, so PCA can throw away exactly the direction you needed.</p><p>Second major caveat in a regulated context: principal components are linear combinations of all the original features, so they are not interpretable and cannot support adverse-action reason codes. That alone rules PCA out of most credit underwriting models. It also requires scaling first, since it is variance-based.</p>"}, {"id": "Q34", "topic": "ML", "sub": "Neural networks", "diff": "medium", "q": "<p>Why did ReLU largely replace sigmoid as the hidden-layer activation in deep networks?</p>", "options": ["<p>ReLU is bounded, which stabilises training</p>", "<p>Sigmoid saturates at both extremes, where its gradient approaches zero — in a deep network these small gradients multiply through backpropagation and the vanishing-gradient problem stalls learning in early layers. ReLU has a constant gradient of 1 for positive inputs</p>", "<p>ReLU produces probabilistic outputs</p>", "<p>Sigmoid cannot represent non-linear functions</p>"], "answer": 1, "why": "<p>The sigmoid&#x27;s derivative peaks at 0.25 and approaches 0 in the tails. Backpropagation multiplies these derivatives layer by layer, so gradients shrink exponentially with depth and early layers barely update.</p><p>ReLU&#x27;s gradient is exactly 1 wherever the unit is active, so the signal propagates. Its own failure mode is &quot;dying ReLU&quot; — a unit stuck at negative input has zero gradient forever — which Leaky ReLU and ELU address. Sigmoid remains correct in the <strong>output</strong> layer for binary classification.</p>"}, {"id": "Q35", "topic": "ML", "sub": "Regularization in NNs", "diff": "easy", "q": "<p>What does dropout do during training, and what happens at inference time?</p>", "options": ["<p>It removes unimportant features permanently; at inference the reduced network is used</p>", "<p>It randomly zeroes a fraction of activations each training step, preventing units from co-adapting; at inference all units are active with activations scaled to match the expected training-time magnitude</p>", "<p>It drops the worst-performing training examples</p>", "<p>It reduces the learning rate over time</p>"], "answer": 1, "why": "<p>Dropout stops units from relying on the presence of specific other units, which forces redundant, more robust representations. It is loosely an ensemble over exponentially many sub-networks.</p><p>The inference behaviour matters and is often asked: <strong>dropout is off at test time</strong>, with scaling applied so expected activation magnitudes match (frameworks use &quot;inverted dropout&quot;, scaling up during training instead). Forgetting to switch to eval mode is a real and common bug.</p>"}, {"id": "Q36", "topic": "ML", "sub": "Gradient descent", "diff": "easy", "q": "<p>Your training loss oscillates wildly and sometimes increases from epoch to epoch.</p><p>What is the most likely cause?</p>", "options": ["<p>The learning rate is too high, so updates overshoot the minimum</p>", "<p>The learning rate is too low</p>", "<p>The model has too few parameters</p>", "<p>The training set is too large</p>"], "answer": 0, "why": "<p>Too large a step size overshoots, bouncing across the loss surface instead of descending it — sometimes diverging outright. A learning rate that is too <strong>low</strong> produces the opposite signature: smooth but painfully slow convergence, often plateauing early.</p><p>Standard responses: lower the learning rate, add a schedule (cosine, step decay), use warmup, or apply gradient clipping. Unscaled input features are a frequent underlying cause, since they make the loss surface badly conditioned.</p>"}, {"id": "Q37", "topic": "ML", "sub": "Interpretability", "diff": "hard", "q": "<p>A gradient-boosting model ranks <code>zip3</code> as its second most important feature for default prediction.</p><p>What is the correct response in a lending context?</p>", "options": ["<p>Keep it — feature importance shows it is predictive, and predictive accuracy is the goal</p>", "<p>Geography is a well-documented proxy for race and national origin. High importance on ZIP is a fair-lending red flag: it should be escalated to compliance, tested for disparate impact, and a less discriminatory alternative sought</p>", "<p>Replace zip3 with full ZIP code for more granularity</p>", "<p>Feature importance is unreliable, so nothing should be concluded</p>"], "answer": 1, "why": "<p>A model that learns &quot;this ZIP defaults more&quot; is implementing redlining regardless of intent, and ECOA/Reg B liability does not depend on intent. High importance on a geographic proxy is a compliance escalation, not a modelling win.</p><p>The expected process: disparate impact testing (adverse impact ratio across proxied demographic groups), a documented business justification, and a search for a <strong>less discriminatory alternative</strong> that achieves comparable performance — that search is itself a regulatory expectation. Note that simply dropping ZIP is not sufficient either, since other permitted variables can carry the same proxy signal.</p>"}, {"id": "Q38", "topic": "ML", "sub": "Model selection", "diff": "medium", "q": "<p>For a credit underwriting decision at a regulated lender, which consideration most strongly favours logistic regression on WOE-binned features over gradient boosting?</p>", "options": ["<p>Logistic regression is always more accurate on tabular data</p>", "<p>Every declined applicant must receive specific principal reasons for the decision under ECOA, and a linear model on monotonic bins yields exact, stable per-applicant reason codes rather than a post-hoc approximation</p>", "<p>Gradient boosting cannot handle categorical features</p>", "<p>Logistic regression trains faster</p>"], "answer": 1, "why": "<p>The binding constraint is <strong>adverse action notices</strong>. A linear model on monotonic bins gives reason codes that are exact, stable, and explainable to a regulator; SHAP on a GBM is a post-hoc approximation with its own assumptions, and it takes far more work to defend in model risk review.</p><p>Option A is false — GBM usually edges out logistic regression on tabular accuracy, and a good answer names that as the real cost of the choice. GBM is often fine for lower-stakes uses: line increases, marketing prioritisation, fraud triage.</p>"}, {"id": "Q39", "topic": "ML", "sub": "Monitoring", "diff": "hard", "q": "<p>Your 12-month default model has been live for two months. What is the fundamental monitoring challenge, and how do you handle it?</p>", "options": ["<p>There is no challenge — compute AUC monthly</p>", "<p>The target takes 12 months to observe, so you cannot measure actual performance yet. You monitor leading indicators instead: score and feature distribution drift (PSI), approval rates, and early performance proxies such as first-payment default and 30-DPD at 3 and 6 months</p>", "<p>Retrain the model every month regardless</p>", "<p>Wait 12 months before monitoring anything</p>"], "answer": 1, "why": "<p>The <strong>outcome lag</strong> is the defining problem in credit model monitoring: by the time you can measure what you actually care about, the model has been making decisions for a year.</p><p>So you monitor what is observable now. Input drift (PSI &gt; 0.10 investigate, &gt; 0.25 escalate) catches population shift and broken pipelines within days. Early delinquency proxies correlate with the eventual outcome and arrive in months rather than a year. A champion/challenger setup running in shadow lets you compare alternatives without waiting for full maturity.</p>"}, {"id": "Q40", "topic": "ML", "sub": "Ensembles", "diff": "medium", "q": "<p>You average the predictions of five models. When does this help most?</p>", "options": ["<p>When all five models are the same algorithm with the same hyperparameters</p>", "<p>When the models are individually reasonably accurate <strong>and</strong> make errors that are not strongly correlated with each other</p>", "<p>When one model is much better than the rest</p>", "<p>Ensembling always improves performance by a fixed amount</p>"], "answer": 1, "why": "<p>Averaging cancels errors only to the extent that they are <strong>independent</strong>. Five copies of the same model make the same mistakes, and averaging them changes nothing. Diversity is the active ingredient — different algorithms, feature subsets, or bootstrap samples.</p><p>The other condition is that the base learners be better than random; averaging in a bad model drags the ensemble down. And when one model clearly dominates, a weighted blend or stacking beats a plain average.</p>"}];
+
+const MODES = [
+  {id:"all",   label:"All",             f:q=>true},
+  {id:"ml",    label:"ML fundamentals", f:q=>q.topic==="ML"},
+  {id:"stats", label:"Probability & stats", f:q=>q.topic!=="ML"},
+  {id:"hard",  label:"Hard only",       f:q=>q.diff==="hard"},
+  {id:"miss",  label:"Missed",          f:q=>missed.has(q.id)},
+];
+
+let missed = new Set();
+try{ const s = localStorage.getItem("dsdrills.missed"); if(s) missed = new Set(JSON.parse(s)); }catch(e){}
+function saveMissed(){ try{ localStorage.setItem("dsdrills.missed",JSON.stringify([...missed])); }catch(e){} }
+
+let mode="all", order=[], i=0, answered=null, ok=0, done=0, log=[];
+
+function shuffle(a){ for(let j=a.length-1;j>0;j--){const k=Math.floor(Math.random()*(j+1));[a[j],a[k]]=[a[k],a[j]];} return a; }
+
+function start(m){
+  mode=m;
+  const def = MODES.find(x=>x.id===m);
+  order = shuffle(Q.filter(def.f).slice());
+  i=0; ok=0; done=0; log=[]; answered=null;
+  renderModes(); render();
+}
+
+function renderModes(){
+  document.getElementById("modes").innerHTML = MODES.map(m=>{
+    const n = Q.filter(m.f).length;
+    const dis = n===0 ? " disabled" : "";
+    return `<button class="chip" data-m="${m.id}" aria-pressed="${m.id===mode}"${dis}>${m.label} <span style="opacity:.6">${n}</span></button>`;
+  }).join("");
+}
+
+function stats(){
+  document.getElementById("c-pos").textContent = Math.min(i+1, order.length||1);
+  document.getElementById("c-tot").textContent = order.length;
+  document.getElementById("c-ok").textContent = ok;
+  document.getElementById("c-acc").textContent = done ? Math.round(ok/done*100)+"%" : "—";
+  document.getElementById("fill").style.width = order.length ? (done/order.length*100)+"%" : "0%";
+}
+
+function render(){
+  const stage = document.getElementById("stage");
+  if(order.length===0){
+    stage.innerHTML = `<div class="card"><p class="res-sub" style="margin:0">Nothing to drill in this set — you haven't missed anything yet. Pick another mode.</p></div>`;
+    stats(); return;
+  }
+  if(i>=order.length){ results(); stats(); return; }
+
+  const q = order[i];
+  stage.innerHTML = `
+    <div class="card">
+      <div class="eyebrow">
+        <span class="qid">${q.id}</span><span class="sep">/</span>
+        <span>${q.topic}</span><span class="sep">/</span>
+        <span>${q.sub}</span>
+        <span class="diff ${q.diff}">${q.diff}</span>
+      </div>
+      <div class="qtext">${q.q}</div>
+      <div class="opts" id="opts">
+        ${q.options.map((o,n)=>`<button class="opt" data-n="${n}"><span class="key">${n+1}</span><span>${o}</span></button>`).join("")}
+      </div>
+      <div id="tail"></div>
+    </div>`;
+  document.querySelectorAll(".opt").forEach(b=>b.addEventListener("click",()=>answer(+b.dataset.n)));
+  answered=null; stats();
+}
+
+function answer(n){
+  if(answered!==null) return;
+  const q = order[i];
+  answered=n; done++;
+  const right = n===q.answer;
+  if(right){ ok++; missed.delete(q.id); } else { missed.add(q.id); }
+  saveMissed();
+  log.push({q, right});
+
+  document.querySelectorAll(".opt").forEach(b=>{
+    const bn=+b.dataset.n; b.disabled=true;
+    if(bn===q.answer) b.classList.add("correct");
+    else if(bn===n) b.classList.add("wrong");
+    else b.classList.add("dim");
+  });
+  document.getElementById("tail").innerHTML = `
+    <div class="why">
+      <div class="verdict ${right?"ok":"no"}">${right?"Correct":"Not quite — the answer is "+String.fromCharCode(65+q.answer)}</div>
+      <div class="why-body">${q.why}</div>
+      <div class="actions">
+        <button class="btn" id="next">${i+1>=order.length?"See results":"Next question"}</button>
+        <span class="hint">Enter</span>
+      </div>
+    </div>`;
+  document.getElementById("next").addEventListener("click",next);
+  document.getElementById("next").focus();
+  stats();
+}
+
+function next(){ i++; render(); window.scrollTo({top:0,behavior:"smooth"}); }
+
+function results(){
+  const byTopic={};
+  log.forEach(({q,right})=>{
+    byTopic[q.topic] ??= {n:0,ok:0};
+    byTopic[q.topic].n++; if(right) byTopic[q.topic].ok++;
+  });
+  const wrong = log.filter(x=>!x.right).map(x=>x.q.id);
+  const pc = done? Math.round(ok/done*100):0;
+  document.getElementById("stage").innerHTML = `
+    <div class="card">
+      <div class="big">${pc}%</div>
+      <h2 class="res-head">${ok} of ${done}</h2>
+      <p class="res-sub">${pc>=85?"Strong. These topics are holding up under pressure."
+        :pc>=70?"Solid. Work the misses below, then come back to this set tomorrow."
+        :"Worth a second pass. Read the explanations on everything you missed before re-running."}</p>
+      <div class="rows">
+        ${Object.entries(byTopic).sort((a,b)=>a[1].ok/a[1].n-b[1].ok/b[1].n).map(([t,v])=>`
+          <div class="row">
+            <span class="nm">${t}</span>
+            <span class="bar2"><i style="width:${Math.round(v.ok/v.n*100)}%"></i></span>
+            <span class="pc">${v.ok}/${v.n} · ${Math.round(v.ok/v.n*100)}%</span>
+          </div>`).join("")}
+      </div>
+      ${wrong.length?`<div class="missed"><strong>Missed:</strong><br>${wrong.map(id=>`<code>${id}</code>`).join("")}</div>`:""}
+      <div class="actions">
+        ${wrong.length?`<button class="btn" id="drill">Drill the ${wrong.length} missed</button>`:""}
+        <button class="btn ghost" id="again">Restart this set</button>
+      </div>
+    </div>`;
+  document.getElementById("again").addEventListener("click",()=>start(mode));
+  const d=document.getElementById("drill");
+  if(d) d.addEventListener("click",()=>start("miss"));
+}
+
+document.getElementById("modes").addEventListener("click",e=>{
+  const b=e.target.closest(".chip"); if(!b||b.disabled) return; start(b.dataset.m);
+});
+document.addEventListener("keydown",e=>{
+  if(e.target.tagName==="INPUT") return;
+  if(e.key>="1"&&e.key<="4"&&answered===null){ const b=document.querySelector(`.opt[data-n="${+e.key-1}"]`); if(b) b.click(); }
+  if(e.key==="Enter"&&answered!==null){ const n=document.getElementById("next"); if(n){e.preventDefault(); n.click();} }
+});
+
+start("all");
+</script>

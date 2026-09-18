@@ -21,6 +21,10 @@ its own, so it works from `attempts/` as well as in place. No internet needed.
 | file | what it is |
 |---|---|
 | `practice_exam.ipynb` | The blank template — 12 graded tasks + 1 written task, 80 minutes. Don't work in it directly; `new-attempt.sh` copies it |
+| `sql_drills.ipynb` | **18 graduated SQL drills**, ~95 min. Start here if SQL syntax isn't automatic yet — work them before re-sitting Section 2 |
+| `DRILLS_SOLUTIONS.md` | Worked solutions + what each drill is really testing |
+| `MCQ_BANK.md` | **40 multiple-choice questions** — probability, statistics, ML fundamentals — with worked explanations. There's an interactive version for drilling; this is the reference sheet |
+| `mcq_bank.py`, `make_mcq_quiz.py` | The MCQ source of truth and the quiz-page generator |
 | `SOLUTIONS.md` | Full worked solutions, the trap behind each task, and the M4 rubric — **don't open until the timer stops** |
 | `grader.py` | `check("P1", p1)` tells you *that* you're wrong and roughly where, without giving the answer away. `score()` for the summary |
 | `answer_key.b64` | Obfuscated expected values. Peeking is possible and pointless. **Generated, gitignored** |

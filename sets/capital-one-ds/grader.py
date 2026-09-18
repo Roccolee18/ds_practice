@@ -270,17 +270,18 @@ def score():
     print("=" * 52)
     print(f"{'task':6s} {'score':>7s}   section")
     print("-" * 52)
-    sec = {"P": "pandas", "S": "SQL", "M": "applied ML"}
+    sec = {"P": "pandas", "S": "SQL", "M": "applied ML", "D": "SQL drills"}
     by_sec = {}
     for k in order:
-        print(f"{k:6s} {_RESULTS[k] * 100:6.0f}%   {sec[k[0]]}")
+        print(f"{k:6s} {_RESULTS[k] * 100:6.0f}%   {sec.get(k[0], '?')}")
         by_sec.setdefault(k[0], []).append(_RESULTS[k])
     print("-" * 52)
     for s, vals in by_sec.items():
-        print(f"{sec[s]:>12s}: {np.mean(vals) * 100:5.0f}%  ({len(vals)} graded)")
+        print(f"{sec.get(s, '?'):>12s}: {np.mean(vals) * 100:5.0f}%  ({len(vals)} graded)")
     print(f"{'OVERALL':>12s}: {np.mean([_RESULTS[k] for k in order]) * 100:5.0f}%")
     print("=" * 52)
-    print("M4 is not auto-graded -- score it against the rubric in SOLUTIONS.md.")
+    if any(k.startswith("M") for k in order):
+        print("M4 is not auto-graded -- score it against the rubric in SOLUTIONS.md.")
 
 
 def tasks():

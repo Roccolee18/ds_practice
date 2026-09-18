@@ -8,6 +8,7 @@ import numpy as np
 import pandas as pd
 
 import solutions_ref as R
+import drills_sql as D
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 
@@ -51,6 +52,9 @@ def main():
 
     for s in ["S1", "S2", "S3", "S4", "S5"]:
         key[s] = df_spec(R.run_sql(s))
+
+    for d in D.SQL:
+        key[d] = df_spec(D.run(d))
 
     m1, _, _ = R.m1()
     key["M1"] = {

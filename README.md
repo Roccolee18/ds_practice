@@ -19,11 +19,13 @@ so anyone cloning this repo (including future you on another machine) needs it.
 ## Layout
 
 ```
+├── GAME_PLAN.md                    # day-by-day schedule to the assessment date
 ├── PROGRESS.md                     # the score log — the point of the repo
 ├── new-attempt.sh                  # start a sitting
 ├── sets/
 │   └── capital-one-ds/             # the problem set (committed)
 │       ├── practice_exam.ipynb     # blank template — never worked in directly
+│       ├── sql_drills.ipynb        # 18 graduated SQL drills (D01–D18)
 │       ├── SOLUTIONS.md            # worked answers + M4 rubric
 │       ├── grader.py               # check("P1", p1) / score()
 │       ├── bootstrap.sh            # rebuilds data/ + answer_key.b64

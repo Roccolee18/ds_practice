@@ -18,4 +18,5 @@ python3 make_key.py >/dev/null
 
 echo
 echo "ready. seed $SEED recorded in data/SEED"
-echo "start a sitting from the repo root with:  ./new-attempt.sh capital-one-ds"
+echo "timed exam : ./new-attempt.sh capital-one-ds   (from the repo root)"
+echo "SQL drills : sets/capital-one-ds/sql_drills.ipynb"
