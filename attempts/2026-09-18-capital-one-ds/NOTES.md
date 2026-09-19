@@ -23,3 +23,10 @@
 - Machine learning focused, as per `GAME_PLAN.md`
 - Beginning to internalize general ML flow for creating baseline models
 - Look, Cover, Recall on M1. M2 and M3
+- M1 Notes
+   - `select_dtypes()` subsets **dataframe**, here its being used to get a list of number columns for preprocessing, so I need the column names in a list
+      - add `.columns.to_list()`
+   - Derive column lists from the exact frame you pass to fit.
+    num = X[feats].select_dtypes(include=np.number).columns.tolist()
+    cat = [c for c in feats if c not in num]
+    assert set(num + cat) == set(feats)
