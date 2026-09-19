@@ -16,10 +16,10 @@
 
 ## What went wrong
 
--
+- restart first, debug second to wipe buggy objects from memory
 
 ## What to drill before next time
 
 - Machine learning focused, as per `GAME_PLAN.md`
 - Beginning to internalize general ML flow for creating baseline models
-- Look, Cover, Recall on M1 
+- Look, Cover, Recall on M1. M2 and M3
