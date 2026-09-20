@@ -628,15 +628,16 @@ a detection routine.
 **Looking for:** an actual pick, defended on *regulatory explainability*, with the cost of the pick
 stated. Either answer can score 2; refusing to choose cannot.
 
-> Logistic regression on WOE-binned features, for a credit underwriting decision. ECOA and Reg B
-> require a specific principal-reason adverse action notice for every decline, and a linear model on
-> monotonic bins gives me per-applicant reason codes that are exact, stable, and explainable to a
-> regulator — not a post-hoc SHAP approximation. Monotonic binning also handles the sentinel values
-> and outliers cleanly, and the model is trivial to monitor coefficient-by-coefficient. The cost is
-> real: on this data GBM is within a point or two of LR, but on a richer feature set I'd expect to
-> give up a few points of AUC, which is a few million dollars of losses at portfolio scale. I'd be
-> comfortable with GBM for a non-adverse-action use — line increases, marketing prioritization,
-> fraud triage — where the explainability bar is lower.
+> Logistic regression on monotonic bins, because ECOA requires specific principal
+> reasons on every decline and a linear model on monotone bins gives exact, stable reason
+> codes rather than a post-hoc approximation. But I wouldn't accept a large accuracy cost
+> for that — I'd measure it first. On this data the logistic regression actually beat gradient
+> boosting (0.769 vs 0.754 AUC, about $9 per application at the profit-maximizing cutoff),
+> which is common for credit features because they're largely monotone and additive in
+> log-odds. If there were a real gap, I'd close it rather than absorb it: monotonic constraints
+> on the GBM recovered about half of it here, and beyond that I'd look at an EBM, or use
+> the GBM where adverse action doesn't bind — line assignment, pricing, prescreen —
+> while keeping the interpretable model on the decline decision.
 
 A 2 answer for GBM exists too: monotonic constraints, SHAP with a documented reason-code mapping, and
 a challenger-model framework — as long as it acknowledges the model-risk review burden it creates.
