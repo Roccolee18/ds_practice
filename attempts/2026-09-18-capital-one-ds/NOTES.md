@@ -30,3 +30,8 @@
     num = X[feats].select_dtypes(include=np.number).columns.tolist()
     cat = [c for c in feats if c not in num]
     assert set(num + cat) == set(feats)
+
+- SQL drills
+   - GROUP BY after afterr aggregation fuctions (e.g. COUNT, AVG, etc.)
+   - JOIN syntax
+   - anti-join with left join syntax
