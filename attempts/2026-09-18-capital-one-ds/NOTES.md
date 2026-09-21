@@ -32,6 +32,12 @@
     assert set(num + cat) == set(feats)
 
 - SQL drills
-   - GROUP BY after afterr aggregation fuctions (e.g. COUNT, AVG, etc.)
+   - GROUP BY after after aggregation fuctions (e.g. COUNT, AVG, etc.)
    - JOIN syntax
    - anti-join with left join syntax
+      1. build group that you don't want first
+      2. left join on FROM table
+      3. WHERE key IS NULL
+      4. then GROUP_BY clause
+   - JOIN first, then GROUP BY
+   - Ensure everything that isn't aggregated is in GROUP BY
