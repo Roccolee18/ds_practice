@@ -41,3 +41,4 @@
       4. then GROUP_BY clause
    - JOIN first, then GROUP BY
    - Ensure everything that isn't aggregated is in GROUP BY
+   - 
