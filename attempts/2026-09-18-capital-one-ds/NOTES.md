@@ -41,4 +41,10 @@
       4. then GROUP_BY clause
    - JOIN first, then GROUP BY
    - Ensure everything that isn't aggregated is in GROUP BY
-   - 
+   
+   - SELECT -> FROM -> JOIN -> WHERE -> GROUP BY -> HAVING -> ORDER BY
+   - "Per...By..." = trigger for CTE of first aggregation
+   - Memorize Top N per Group formula
+   - Still may need to ORDER BY in main SELECT statement even after RANK()
+   - strftime(format, TARGET VARIABLE)
+   - PARTITION BY whenever the window input has more than one entity's rows in it. 
