@@ -48,3 +48,4 @@
    - Still may need to ORDER BY in main SELECT statement even after RANK()
    - strftime(format, TARGET VARIABLE)
    - PARTITION BY whenever the window input has more than one entity's rows in it. 
+   - Empty result = probably wrong key join
