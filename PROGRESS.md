@@ -19,7 +19,8 @@ Budget 80 min. Calibration: **≥85%** good shape · **65–85%** competitive ·
 Things that have bitten me more than once — keep this list short and honest, and reread it
 before the next sitting.
 
--
+- df[["col_name"]] to get 1 col of a df and keep it as a df instead of series
+- df[(cond1) & (cond2)] - wrap conditions in () when filtering with multiple
 
 ## Patterns I want automatic
 

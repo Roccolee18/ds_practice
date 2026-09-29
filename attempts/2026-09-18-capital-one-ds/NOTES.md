@@ -49,3 +49,7 @@
    - strftime(format, TARGET VARIABLE)
    - PARTITION BY whenever the window input has more than one entity's rows in it. 
    - Empty result = probably wrong key join
+   - date('YYYY-MM-DD', formatting)
+   - whenever divinding anything: * 1.0 to get real number division
+   - whenever NEXT MONTH is mentioned -> CTE of next month
+   - GROUP BY **primary key**, **must be unique**
