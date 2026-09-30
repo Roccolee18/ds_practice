@@ -19,8 +19,21 @@ Budget 80 min. Calibration: **≥85%** good shape · **65–85%** competitive ·
 Things that have bitten me more than once — keep this list short and honest, and reread it
 before the next sitting.
 
+pandas
 - df[["col_name"]] to get 1 col of a df and keep it as a df instead of series
+   - 1 col of df and keep it df instead of series: 
 - df[(cond1) & (cond2)] - wrap conditions in () when filtering with multiple
+   - filtering with multiple conditions:
+
+SQL
+- date intervals: WHERE year BETWEEN 2000 AND 2010
+   - date interval: 
+- col LIKE 'AT%' to match a sequence of 0 or more characters
+   - Matching sequence of 0 or more characters
+- col LIKE 'AT_' to match a single character
+   - Matching exactly 1 character
+- LIMIT...OFFSET X to show next X number of results from LIMIT
+   - Only showing NEXT number of results from LIMIT
 
 ## Patterns I want automatic
 
