@@ -20,10 +20,20 @@ Things that have bitten me more than once — keep this list short and honest, a
 before the next sitting.
 
 pandas
-- df[["col_name"]] to get 1 col of a df and keep it as a df instead of series
-   - 1 col of df and keep it df instead of series: 
-- df[(cond1) & (cond2)] - wrap conditions in () when filtering with multiple
-   - filtering with multiple conditions:
+- Get 1 col of a df and keep it as a df instead of series
+   - 
+- filtering with multiple conditions:
+   - df[(df["col1"] == 1) & (df["col2"] == 2)]
+- Drop duplicate rows based on values from a certain column
+   - df.drop_duplicates(subset=["col"])
+- Rename columns
+   - df.rename(columns = {"old": "new", "old1": "new1"})
+- Sort column
+   - df.sort_values(by = "col", ascending = True)
+- length of a cell in a dataframe
+   - df[df["col"].str.len()]
+- find rows based on a condition
+   - df.loc[(cond1) & (cond2)]
 
 SQL
 - date intervals: WHERE year BETWEEN 2000 AND 2010
