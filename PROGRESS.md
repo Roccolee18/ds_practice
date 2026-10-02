@@ -23,28 +23,27 @@ pandas
 - Get 1 col of a df and keep it as a df instead of series
    - 
 - filtering with multiple conditions:
-   - df[(df["col1"] == 1) & (df["col2"] == 2)]
+   - 
 - Drop duplicate rows based on values from a certain column
-   - df.drop_duplicates(subset=["col"])
+   - 
 - Rename columns
-   - df.rename(columns = {"old": "new", "old1": "new1"})
+   - 
 - Sort column
-   - df.sort_values(by = "col", ascending = True)
+   - 
 - length of a cell in a dataframe
-   - df[df["col"].str.len()]
+   - 
 - find rows based on a condition
-   - df.loc[(cond1) & (cond2)]
+   - 
 
 SQL
-- date intervals: WHERE year BETWEEN 2000 AND 2010
-   - date interval: 
-- col LIKE 'AT%' to match a sequence of 0 or more characters
-   - Matching sequence of 0 or more characters
-- col LIKE 'AT_' to match a single character
-   - Matching exactly 1 character
-- LIMIT...OFFSET X to show next X number of results from LIMIT
-   - Only showing NEXT number of results from LIMIT
-
+- date interval
+   - 
+- Matching sequence of 0 or more characters
+   - 
+- Matching exactly 1 character
+   - 
+- Only showing NEXT number of results from LIMIT
+   - 
 ## Patterns I want automatic
 
 Move an item here once I've done it correctly, cold, twice.
