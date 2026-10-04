@@ -40,6 +40,14 @@ pandas
 - matching column to regex
    - df[df["text_col"].str.contains(r'')]
    - df[df["text_col"].str.matches(r'')]
+- XOR cancellation - finding single number/finding missing number
+   - result ^= x
+- dict of counts from a list
+   - for i in arr:
+   - counts[i] = counts.get(i, 0) + 1
+- turn dict values/keys into list
+   - list(mydict.values())
+   - list(mydict.keys())
 
 SQL
 - date interval
