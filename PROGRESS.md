@@ -23,22 +23,22 @@ pandas
 - Get 1 col of a df and keep it as a df instead of series
    - df[["col1"]]
 - filtering with multiple conditions:
-   - df[(cond1) & (cond2)]
+   - df[(col1) & (col2)]
 - Drop duplicate rows based on values from a certain column
-   - df.drop_duplicates(subset=["col"])
+   - df.drop_duplicates(subset = ["col"])
 - Rename columns
-   - df.rename(columns={"old1":"new1", "old2": "new2"})
+   - df.rename({"old": "new"})
 - Sort column
-   - df.sort_values(by="col")
+   - df.sort_values(by = "col")
 - length of a cell in a dataframe
    - df["col"].str.len()
 - find rows based on a condition
-   - df[df["col"] = conditon]
+   - df[df["col"] == cond]
 - camel case
    - df["text_col"].str.captialize()
    - df["text_col"].str.title()
 - matching column to regex
-   - df[df["text_col"].str.contains(r'')]
+   - df[df["col"].str.contains(r'')]
    - df[df["text_col"].str.matches(r'')]
 - XOR cancellation - finding single number/finding missing number
    - result ^= x
