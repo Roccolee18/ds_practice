@@ -50,16 +50,23 @@ pandas
    - list(mydict.keys())
 
 SQL
+- Filtering for multiple conditions
+   - WHERE col IN ('one', 'two', 'three')
 - date interval
-   - 
+   - WHERE DATE BETWEEN 'YYYY-MM-DD' AND 'YYYY-MM-DD'
 - Matching sequence of 0 or more characters
-   - 
+   - WHERE col LIKE 'AT%'
 - Matching exactly 1 character
-   - 
+   - WHERE col LIKE 'AT_'
 - Only showing NEXT number of results from LIMIT
-   - 
-## Patterns I want automatic
+   - LIMIT 5 OFFSET 5
+- Top N per group
+   - WITH rn AS(
+   - ROW_NUMBER() OVER (PARTITION BY group_col ORDER BY ranked_col)) AS rank
+   - )
+   - SELECT rank FROM rn WHERE rn < N
 
+## Patterns I want automatic
 Move an item here once I've done it correctly, cold, twice.
 
 - [ ] `ROW_NUMBER() OVER (PARTITION BY … ORDER BY …)` → filter `rn = 1` (top-N per group)
