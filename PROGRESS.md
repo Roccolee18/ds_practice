@@ -65,6 +65,14 @@ SQL
    - ROW_NUMBER() OVER (PARTITION BY group_col ORDER BY ranked_col)) AS rank
    - )
    - SELECT rank FROM rn WHERE rn < N
+- Anti-Join
+   - LEFT JOIN(
+      - SELECT a.customer_id, s.days_past_due
+      - FROM accounts a
+      - JOIN statements s ON a.account_id = s.account_id
+      - WHERE s.days_past_due > 0
+   - ) d ON d.customer_id = c.customer_id
+   - WHERE d.customer_id IS NULL
 
 ## Patterns I want automatic
 Move an item here once I've done it correctly, cold, twice.
