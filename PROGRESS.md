@@ -19,35 +19,32 @@ Budget 80 min. Calibration: **≥85%** good shape · **65–85%** competitive ·
 Things that have bitten me more than once — keep this list short and honest, and reread it
 before the next sitting.
 
-pandas
+pandas/python
 - Get 1 col of a df and keep it as a df instead of series
-   - df[["col1"]]
+   - df[["col"]]
 - filtering with multiple conditions:
-   - df[(col1) & (col2)]
+   - df[(cond1) | (cond2)]
 - Drop duplicate rows based on values from a certain column
    - df.drop_duplicates(subset = ["col"])
 - Rename columns
-   - df.rename({"old": "new"})
+   - df.rename(columns = {"old": "new"}
 - Sort column
-   - df.sort_values(by = "col")
+   - df.sort_values(by = "col1", ascending = False)
 - length of a cell in a dataframe
    - df["col"].str.len()
 - find rows based on a condition
-   - df[df["col"] == cond]
-- camel case
-   - df["text_col"].str.captialize()
-   - df["text_col"].str.title()
+   - df.loc[df[cond]]
 - matching column to regex
-   - df[df["col"].str.contains(r'')]
-   - df[df["text_col"].str.matches(r'')]
-- XOR cancellation - finding single number/finding missing number
-   - result ^= x
+   - 
+   - 
 - dict of counts from a list
    - for i in arr:
    - counts[i] = counts.get(i, 0) + 1
 - turn dict values/keys into list
-   - list(mydict.values())
-   - list(mydict.keys())
+   - list(count.keys())
+   - list(count.values())
+- Ranking
+   - df["rank"] = df["col_to_rank"].rank(method = "dense")
 
 SQL
 - Filtering for multiple conditions
