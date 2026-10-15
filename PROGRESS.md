@@ -34,9 +34,6 @@ pandas/python
    - df["col"].str.len()
 - find rows based on a condition
    - df.loc[df[cond]]
-- matching column to regex
-   - 
-   - 
 - dict of counts from a list
    - for i in arr:
    - counts[i] = counts.get(i, 0) + 1
@@ -47,7 +44,24 @@ pandas/python
    - df["rank"] = df["col_to_rank"].rank(method = "dense")
 
 SQL
+
 - Filtering for multiple conditions
+   - 
+- date interval
+   - 
+- Matching sequence of 0 or more characters
+   - 
+- Matching exactly 1 character
+   - 
+- Only showing NEXT number of results from LIMIT
+   - 
+- Top N per group
+   - 
+- Anti-Join
+
+
+
+<!-- - Filtering for multiple conditions
    - WHERE col IN ('one', 'two', 'three')
 - date interval
    - WHERE DATE BETWEEN 'YYYY-MM-DD' AND 'YYYY-MM-DD'
@@ -69,7 +83,7 @@ SQL
       - JOIN statements s ON a.account_id = s.account_id
       - WHERE s.days_past_due > 0
    - ) d ON d.customer_id = c.customer_id
-   - WHERE d.customer_id IS NULL
+   - WHERE d.customer_id IS NULL -->
 
 ## Patterns I want automatic
 Move an item here once I've done it correctly, cold, twice.
