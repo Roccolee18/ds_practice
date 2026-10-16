@@ -21,6 +21,32 @@ before the next sitting.
 
 pandas/python
 - Get 1 col of a df and keep it as a df instead of series
+   - df[["col1"]]
+- filtering with multiple conditions:
+   - df[(cond1) & (cond2)]
+- Drop duplicate rows based on values from a certain column
+   - dr.drop_duplicates(subset=["col1"])
+- Rename columns
+   - df.rename(columns = {"old": "new"})
+- Sort column
+   - df.sort_values(by = "col")
+- length of a cell in a dataframe
+   - df["col"].str.len()
+- find rows based on a condition
+   - df[df["col1"] > 2]
+- dict of counts from a list
+   - for i in arr:
+      - counts[i] = counts.get(i, 0) + 1
+- turn dict values/keys into list
+   - list(counts.keys())
+   - list(counts.values())
+- Ranking
+   - ranked = df["col"].rank(method = "dense")
+- melt
+   - melted = pd.melt(df, id_vars = "unique_id_col", var_name = "col_to_group_by", value_name = "value_name_col")
+
+
+<!-- - Get 1 col of a df and keep it as a df instead of series
    - df[["col"]]
 - filtering with multiple conditions:
    - df[(cond1) | (cond2)]
@@ -41,7 +67,8 @@ pandas/python
    - list(count.keys())
    - list(count.values())
 - Ranking
-   - df["rank"] = df["col_to_rank"].rank(method = "dense")
+   - df["rank"] = df["col_to_rank"].rank(method = "dense") -->
+
 
 SQL
 
