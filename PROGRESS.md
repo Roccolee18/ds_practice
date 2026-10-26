@@ -23,17 +23,17 @@ pandas/python
 - Get 1 col of a df and keep it as a df instead of series
    - df[["col1"]]
 - filtering with multiple conditions:
-   - df[(cond1) & (cond2)]
+   - df[(df["col1"] > 1) & (df["col2"] < 2>)]
 - Drop duplicate rows based on values from a certain column
-   - dr.drop_duplicates(subset=["col1"])
+   - df.drop_duplicates(subset = ["col1"])
 - Rename columns
-   - df.rename(columns = {"old": "new"})
+   -  df.rename(columns = {"old": "new"})
 - Sort column
-   - df.sort_values(by = "col")
+   - df.sort_values(by = "col1")
 - length of a cell in a dataframe
-   - df["col"].str.len()
+   - df["col1"].str.len()
 - find rows based on a condition
-   - df[df["col1"] > 2]
+   - df.loc[df["col"] > 1]
 - dict of counts from a list
    - for i in arr:
       - counts[i] = counts.get(i, 0) + 1
@@ -41,9 +41,7 @@ pandas/python
    - list(counts.keys())
    - list(counts.values())
 - Ranking
-   - ranked = df["col"].rank(method = "dense")
-- melt
-   - melted = pd.melt(df, id_vars = "unique_id_col", var_name = "col_to_group_by", value_name = "value_name_col")
+   - df["rank"] = df["col_to_rank"].rank(method = "dense")
 
 
 <!-- - Get 1 col of a df and keep it as a df instead of series
